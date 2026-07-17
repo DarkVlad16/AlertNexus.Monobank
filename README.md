@@ -4,10 +4,17 @@
 
 ## Використання
 
-Додайте ID банки Monobank до адреси сторінки:
+Скопіюйте посилання на банку Monobank. Наприклад:
 
 ```text
-https://darkvlad16.github.io/AlertNexus.Monobank/?jar=ID_БАНКИ
+https://send.monobank.ua/jar/7Q7nzyPWdo
+```
+
+ID банки — це частина посилання після `/jar/`, у цьому прикладі `7Q7nzyPWdo`.
+Додайте цей ID до адреси сторінки після `?jar=`:
+
+```text
+https://darkvlad16.github.io/AlertNexus.Monobank/?jar=7Q7nzyPWdo
 ```
 
 Донатер вказує нік, суму та повідомлення. Сторінка відкриває Monobank із параметрами:
