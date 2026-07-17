@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action https://send.monobank.ua">
+  <title>AlertNexus · Monobank donation</title>
+  <style>
+    :root{font-family:Inter,"Segoe UI",sans-serif;color:#f7f8fb;background:#080b12;--panel:#111722;--line:#29354a;--muted:#94a3b8;--accent:#7658ff;--green:#29d7a2}*{box-sizing:border-box}body{min-height:100vh;margin:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 70% 0,#432d7d66,transparent 42%),#080b12}.page{width:min(100%,640px)}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px;font-size:20px;font-weight:800}.logo{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#8b5cf6,#4f46e5);box-shadow:0 9px 26px #6d5af744}.language{display:flex;padding:3px;border:1px solid var(--line);border-radius:11px}.language button{padding:7px 11px;border:0;border-radius:8px;color:var(--muted);background:transparent;cursor:pointer}.language button.active{color:white;background:#29354a}.card{padding:28px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,#131a27,#0d131d);box-shadow:0 24px 70px #0005}h1{margin:0 0 8px;font-size:28px}p{margin:0;color:var(--muted);line-height:1.5}.platforms{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:22px}.platform{padding:11px;border:1px solid var(--line);border-radius:10px;color:var(--muted);background:#0a1019;font-weight:700;cursor:pointer}.platform.active{border-color:var(--accent);color:white;background:#7658ff22}label{display:block;margin:16px 0 7px;color:#b7c3d5;font-size:13px}input,textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:10px;color:white;background:#090f18;font:inherit;outline:none}input:focus,textarea:focus{border-color:var(--accent)}textarea{min-height:104px;resize:vertical}.row{display:grid;grid-template-columns:1fr 150px;gap:10px}.preview{margin:18px 0;padding:13px;border:1px solid #344159;border-radius:10px;color:#dce4f0;background:#0a1019;overflow-wrap:anywhere}.preview small{display:block;margin-bottom:5px;color:var(--muted)}.primary{width:100%;padding:13px;border:0;border-radius:11px;color:white;background:linear-gradient(135deg,#8061ff,#6846ee);font:inherit;font-weight:800;cursor:pointer}.primary:disabled{opacity:.45;cursor:not-allowed}.privacy{display:flex;gap:8px;margin-top:14px;font-size:12px}.privacy span{color:var(--green)}.error{min-height:20px;margin-top:10px;color:#fda4af;font-size:13px}.setup{margin-top:14px;padding:12px;border:1px dashed #4a5870;border-radius:10px;font-size:12px}@media(max-width:520px){body{padding:14px}.card{padding:21px}.row{grid-template-columns:1fr}h1{font-size:24px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header><div class="brand"><span class="logo">A</span>AlertNexus</div><div class="language"><button type="button" data-lang="uk">UA</button><button type="button" data-lang="en">EN</button></div></header>
+    <section class="card">
+      <h1 data-t="title"></h1>
+      <p data-t="intro"></p>
+      <div class="platforms"><button type="button" class="platform active" data-platform="Twitch">Twitch</button><button type="button" class="platform" data-platform="YouTube">YouTube</button></div>
+      <form id="donationForm">
+        <div class="row"><div><label for="nickname" data-t="nickname"></label><input id="nickname" autocomplete="nickname" maxlength="40" placeholder="DarkVlad" required></div><div><label for="amount" data-t="amount"></label><input id="amount" type="number" inputmode="decimal" min="1" step="0.01" value="50.00" required></div></div>
+        <label for="message" data-t="message"></label><textarea id="message" maxlength="300" data-placeholder="messagePlaceholder" required></textarea>
+        <div class="preview"><small data-t="comment"></small><strong id="commentPreview">@DarkVlad</strong></div>
+        <button id="pay" class="primary" type="submit" data-t="pay"></button>
+        <div id="error" class="error" role="alert"></div>
+      </form>
+      <p id="setup" class="setup" data-t="setup" hidden></p>
+      <p class="privacy"><span>●</span><span data-t="privacy"></span></p>
+    </section>
+  </main>
+  <script>
+    const translations={uk:{title:'Підтримати стрім',intro:'Вкажіть свій нік і повідомлення — банківське ім’я не потрапить в алерт.',nickname:'Нік на платформі',amount:'Сума, UAH',message:'Повідомлення',messagePlaceholder:'Дякую за стрім!',comment:'Коментар для Monobank',pay:'Перейти до оплати',privacy:'Дані залишаються у вашому браузері й передаються лише Monobank.',setup:'Посилання на банку не налаштовано. Додайте до адреси сторінки ?jar=ID_БАНКИ.',invalidNick:'Нік має містити 1–40 символів без пробілів.',invalidJar:'Посилання на банку некоректне.'},en:{title:'Support the stream',intro:'Enter your nickname and message — your bank name will never appear in the alert.',nickname:'Platform nickname',amount:'Amount, UAH',message:'Message',messagePlaceholder:'Thanks for the stream!',comment:'Monobank comment',pay:'Continue to payment',privacy:'The data stays in your browser and is sent only to Monobank.',setup:'The jar is not configured. Add ?jar=JAR_ID to this page URL.',invalidNick:'Use 1–40 characters without spaces.',invalidJar:'The jar link is invalid.'}};
+    const params=new URLSearchParams(location.search),nickname=document.querySelector('#nickname'),amount=document.querySelector('#amount'),message=document.querySelector('#message'),preview=document.querySelector('#commentPreview'),error=document.querySelector('#error'),pay=document.querySelector('#pay'),setup=document.querySelector('#setup');
+    let lang=params.get('lang')||((navigator.language||'').toLowerCase().startsWith('uk')?'uk':'en'),platform='Twitch';
+    const jarTarget=raw=>{if(!raw)return null;const value=/^[\w-]{5,64}$/.test(raw)?`https://send.monobank.ua/jar/${raw}`:raw;try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='send.monobank.ua'&&url.pathname.startsWith('/jar/')?url:null}catch{return null}};
+    const jar=jarTarget(params.get('jar'));
+    const comment=()=>{const nick=nickname.value.trim().replace(/^@/,'');return `@${nick}${message.value.trim()?` ${message.value.trim()}`:''}`};
+    const update=()=>{preview.textContent=comment();error.textContent=''};
+    const translate=()=>{document.documentElement.lang=lang;document.querySelectorAll('[data-t]').forEach(node=>node.textContent=translations[lang][node.dataset.t]);document.querySelectorAll('[data-placeholder]').forEach(node=>node.placeholder=translations[lang][node.dataset.placeholder]);document.querySelectorAll('[data-lang]').forEach(button=>button.classList.toggle('active',button.dataset.lang===lang));setup.hidden=!!jar;pay.disabled=!jar};
+    nickname.value=(params.get('nick')||'').replace(/^@/,'');amount.value=params.get('amount')||'50.00';message.value=params.get('message')||'';update();translate();
+    document.querySelector('.language').onclick=event=>{const button=event.target.closest('[data-lang]');if(button){lang=button.dataset.lang;translate()}};
+    document.querySelector('.platforms').onclick=event=>{const button=event.target.closest('[data-platform]');if(!button)return;platform=button.dataset.platform;document.querySelectorAll('[data-platform]').forEach(item=>item.classList.toggle('active',item===button));nickname.placeholder=platform==='Twitch'?'DarkVlad':'@DarkVlad'};
+    nickname.oninput=message.oninput=update;
+    document.querySelector('#donationForm').onsubmit=event=>{event.preventDefault();const nick=nickname.value.trim().replace(/^@/,'');if(!/^\S{1,40}$/u.test(nick)){error.textContent=translations[lang].invalidNick;nickname.focus();return}if(!jar){error.textContent=translations[lang].invalidJar;return}const target=new URL(jar);target.searchParams.set('a',Number(amount.value).toFixed(2));target.searchParams.set('t',comment());location.href=target.toString()};
+  </script>
+</body>
+</html>
