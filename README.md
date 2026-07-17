@@ -1,4 +1,4 @@
-# AlertNexus.Donate
+# AlertNexus.Monobank
 
 Статична сторінка для формування посилання на донат через Monobank для AlertNexus.
 
@@ -7,7 +7,7 @@
 Додайте ID банки Monobank до адреси сторінки:
 
 ```text
-https://darkvlad16.github.io/AlertNexus.Donate/?jar=ID_БАНКИ
+https://darkvlad16.github.io/AlertNexus.Monobank/?jar=ID_БАНКИ
 ```
 
 Донатер вказує нік, суму та повідомлення. Сторінка відкриває Monobank із параметрами:
